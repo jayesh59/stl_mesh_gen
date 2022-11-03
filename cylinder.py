@@ -3,6 +3,7 @@
 from sys import argv
 from stl import mesh, stl
 from numpy import pi, sin, cos, zeros, array, concatenate
+from math import floor, ceil
 
 import base.pipe as pipemesh
 import base.circle as circlemesh
@@ -19,8 +20,8 @@ def build_cylindricalmesh(radius, height, finishing):
                                                                    True)
     P = 2*pi*radius
     ratio = height/P
-    hgt_chunk_qty = int( angular_chunk_qty*ratio)
-    if hgt_chunk_qty%2!=0:
+    hgt_chunk_qty = angular_chunk_qty*ratio
+    if floor(hgt_chunk_qty%2)!=0:
         hgt_chunk_qty-=1
     #=============================================================
     #       Pipe
