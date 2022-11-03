@@ -67,7 +67,7 @@ def _build(radius, angular_chunks, core_num, ch = 0):
     coef_2x_repeatnum = angular_chunks/core_num#        eg.  4   = 20/5
     repeatnum = 1
     
-    while coef_2x_repeatnum/2 <>1:
+    while coef_2x_repeatnum/2 !=1:
         coef_2x_repeatnum /= 2
         repeatnum += 1  # 1 2 3 4 ....      eg.  2   = 4/2 --> 1   = 2/2 end with repeatnum == 2
         
@@ -76,7 +76,7 @@ def _build(radius, angular_chunks, core_num, ch = 0):
     if radial_steps > repeatnum + 1:
         layers2comp = radial_steps- repeatnum- 1
         
-        if layers2comp<>0 and layers2comp%2<>0:
+        if layers2comp!=0 and layers2comp%2!=0:
             flag_2cover = True
             r2cover = radial_chnk_len*layers2comp
             layers2comp+=1
@@ -86,7 +86,7 @@ def _build(radius, angular_chunks, core_num, ch = 0):
             tap_tri *= x
     tri_in_cycle = [core_num*x for x in range(repeatnum+1)[1:]]
     
-    tap_tri = (core_num*(1+len(tri_in_cycle)*tap_tri)+layers2comp*2*angular_chunks)
+    tap_tri = int((core_num*(1+len(tri_in_cycle)*tap_tri)+layers2comp*2*angular_chunks))
     tap = zeros(tap_tri, dtype=mesh.Mesh.dtype)
     #=============================================================
     #       CORE Creation
@@ -95,7 +95,7 @@ def _build(radius, angular_chunks, core_num, ch = 0):
     Ri = 0
     Re = radial_chnk_len
     delta_theta = 360/float(core_num)*(pi/180) # in radians
-    for i in range(core_num):
+    for i in range(int(core_num)):
         tap['vectors'][i+ bfr] = array([ [Re*cos(theta), Re*sin(theta), ch],
                                          [Ri*cos(theta), Ri*sin(theta), ch],
                                          [Re*cos(theta+delta_theta),
@@ -109,17 +109,17 @@ def _build(radius, angular_chunks, core_num, ch = 0):
         Re+= radial_chnk_len
         delta_theta/= 2
         
-        for i in range(tri_in_cycle[r]):
-            tap['vectors'][i*3+ bfr] = array([[Re*cos(theta), Re*sin(theta), ch],
+        for i in range(int(tri_in_cycle[r])):
+            tap['vectors'][int(i*3+ bfr)] = array([[Re*cos(theta), Re*sin(theta), ch],
                                             [Ri*cos(theta), Ri*sin(theta), ch],
                                             [Re*cos(theta+delta_theta),
                                              Re*sin(theta+delta_theta), ch] ])
-            tap['vectors'][i*3+1+ bfr] = array([[Ri*cos(theta), Ri*sin(theta), ch],
+            tap['vectors'][int(i*3+1+ bfr)] = array([[Ri*cos(theta), Ri*sin(theta), ch],
                                             [Ri*cos(theta+2*delta_theta),
                                              Ri*sin(theta+2*delta_theta), ch],
                                             [Re*cos(theta+delta_theta),
                                              Re*sin(theta+delta_theta), ch]])
-            tap['vectors'][i*3+2+bfr] = array([[Re*cos(theta+delta_theta),
+            tap['vectors'][int(i*3+2+bfr)] = array([[Re*cos(theta+delta_theta),
                                                 Re*sin(theta+delta_theta), ch],
                                             [Ri*cos(theta+2*delta_theta),
                                              Ri*sin(theta+2*delta_theta), ch],
@@ -137,13 +137,13 @@ def _build(radius, angular_chunks, core_num, ch = 0):
         Re+= radial_chnk_len
         theta-= delta_theta/2
         for i in range(angular_chunks):
-            tap['vectors'][i*2 + bfr] = array([[Re*cos(theta), Re*sin(theta), ch],
+            tap['vectors'][int(i*2 + bfr)] = array([[Re*cos(theta), Re*sin(theta), ch],
                                                [Ri*cos(theta+delta_theta/2),
                                                 Ri*sin(theta+delta_theta/2), ch],
                                                [Re*cos(theta+delta_theta),
                                                 Re*sin(theta+delta_theta), ch]])
             theta+= delta_theta/2
-            tap['vectors'][i*2+1 + bfr] = array([[Ri*cos(theta), Ri*sin(theta), ch],
+            tap['vectors'][int(i*2+1 + bfr)] = array([[Ri*cos(theta), Ri*sin(theta), ch],
                                                  [Re*cos(theta+delta_theta/2),
                                                   Re*sin(theta+delta_theta/2), ch],
                                                  [Ri*cos(theta+delta_theta),

@@ -50,6 +50,7 @@ def finishing2size(num):
             exit('Warning!! ceil reached')
         
     return num, sqrs
+
 def _build(pt1, pt2, pt3, pt4, finishing):
     
     x_len = max(pt2[0], pt3[0], pt4[0]) - min(pt2[0], pt3[0], pt1[0])
@@ -95,8 +96,8 @@ def _build(pt1, pt2, pt3, pt4, finishing):
         z_step_len_e = z_step_len
         
     
-    for i in range(sqr_num):
-        for j in range(sqr_num):
+    for i in range(int(sqr_num)):
+        for j in range(int(sqr_num)):
             
             pt1= [ v_x, v_y, v_z]
             
@@ -106,15 +107,15 @@ def _build(pt1, pt2, pt3, pt4, finishing):
             pt4= [ v_x + x_step_len, v_y + y_step_len, v_z+ z_step_len]
             
             if sqr_type:
-                data['vectors'][j*2+ buffer] = array([ pt1, pt2, pt3])
-                data['vectors'][j*2+ 1+ buffer] = array([ pt2, pt3, pt4])
+                data['vectors'][int(j*2 + buffer)] = array([ pt1, pt2, pt3])
+                data['vectors'][int(j*2 + 1+ buffer)] = array([ pt2, pt3, pt4])
             else:
                 pt5=[v_x+ x_step_len/2, v_y+ y_step_len/2, v_z+ z_step_len/2]
                 
-                data['vectors'][j*4+buffer] = array([ pt1, pt2, pt5])
-                data['vectors'][j*4+1+buffer] = array([ pt1, pt3, pt5])
-                data['vectors'][j*4+2+buffer] = array([ pt5, pt2, pt4])
-                data['vectors'][j*4+3+buffer] = array([ pt5, pt3, pt4])
+                data['vectors'][int(j*4+buffer)] = array([ pt1, pt2, pt5])
+                data['vectors'][int(j*4+1+buffer)] = array([ pt1, pt3, pt5])
+                data['vectors'][int(j*4+2+buffer)] = array([ pt5, pt2, pt4])
+                data['vectors'][int(j*4+3+buffer)] = array([ pt5, pt3, pt4])
                 
             v_x+= x_step_len_i
             v_y+= y_step_len_i
