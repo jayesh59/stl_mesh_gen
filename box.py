@@ -7,7 +7,7 @@ from utils.render import meshrender
 
 
 
-def build(l, b, h, finishing):
+def build_cuboid(l, b, h, finishing):
     
     vertex = [0, 0, 0]
     p2 = [l, 0, 0]
@@ -45,7 +45,7 @@ def build(l, b, h, finishing):
     
 if __name__ == "__main__":
     
-    onemesh = build(1, 2, 3 , 32)
+    onemesh = build_cuboid(1, 2, 3 , 32)
     #onemesh = buildsquare([ 0, 0, 0], [ 6, 6, 0], 64)
     meshes = [mesh.Mesh(onemesh)]
     meshrender( meshes, 0)
