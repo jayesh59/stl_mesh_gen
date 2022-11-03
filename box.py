@@ -13,9 +13,9 @@ def build(pt1, pt2, finishing):
     low_x, upr_x = sorted([pt1[0], pt2[0]])
     low_y, upr_y = sorted([pt1[1], pt2[1]])
     low_z, upr_z = sorted([pt1[2], pt2[2]])
-    print low_x, upr_x
-    print low_y, upr_y
-    print low_z, upr_z
+    print (low_x, upr_x)
+    print (low_y, upr_y)
+    print (low_z, upr_z)
     x_dist = upr_x - low_x
     y_dist = upr_y - low_y
     z_dist = upr_z - low_z
