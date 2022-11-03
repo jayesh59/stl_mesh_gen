@@ -2,43 +2,39 @@
 
 from stl import mesh
 from numpy import concatenate
-from base.squared import build_from_diagonal as buildsquare
+from base.squared import _build
 from utils.render import meshrender
 
 
 
-def build(pt1, pt2, finishing):
+def build(l, b, h, finishing):
     
-    
-    low_x, upr_x = sorted([pt1[0], pt2[0]])
-    low_y, upr_y = sorted([pt1[1], pt2[1]])
-    low_z, upr_z = sorted([pt1[2], pt2[2]])
-    print (low_x, upr_x)
-    print (low_y, upr_y)
-    print (low_z, upr_z)
-    x_dist = upr_x - low_x
-    y_dist = upr_y - low_y
-    z_dist = upr_z - low_z
-    
-    vertex= [ low_x, low_y, low_z]
-    #=============================================================
-    # base   - XY
-    data_basemesh = buildsquare(vertex, [upr_x, upr_y, low_z], finishing)
-    # ceil   - XY
+    vertex = [0, 0, 0]
+    p2 = [l, 0, 0]
+    p3 = [0, b, 0]
+    p4 = [0, 0, h]
+    p5 = [l, 0, h]
+    p6 = [0, b, h]
+    p7 = [l, b, 0]
+    p8 = [l, b, h]
+
+    # base   - XY::LB
+    data_basemesh = _build(vertex, p2, p3, p7, finishing)
+    # ceil   - XY::LB
     data_topmesh = data_basemesh.copy()
-    data_topmesh['vectors'] += [ 0, 0, z_dist]
+    data_topmesh['vectors'] += [ 0, 0, h]
     #=============================================================
-    # frontal - XZ
-    data_frontsidemesh = buildsquare(vertex, [upr_x, low_y, upr_z], finishing)
-    # rear   - XZ
+    # frontal - XZ::LH
+    data_frontsidemesh = _build(vertex, p2, p4 ,p5, finishing)
+    # rear   - XZ::LH
     data_rearsidemesh = data_frontsidemesh.copy()
-    data_rearsidemesh['vectors'] += [ 0, y_dist, 0]
+    data_rearsidemesh['vectors'] += [ 0, b, 0]
     #=============================================================
-    # leftside - YZ
-    data_leftsidemesh = buildsquare(vertex, [low_x, upr_y, upr_z], finishing)
-    # rightside   - YZ
+    # leftside - YZ::BH
+    data_leftsidemesh = _build(vertex, p3, p4 ,p6, finishing)
+    # rightside   - YZ::BH
     data_rightsidemesh = data_leftsidemesh.copy()
-    data_rightsidemesh['vectors'] += [ x_dist, 0, 0]
+    data_rightsidemesh['vectors'] += [ l, 0, 0]
     #=============================================================
     meshdata = [ data_basemesh, data_topmesh,
                 data_frontsidemesh, data_rearsidemesh,
@@ -49,7 +45,7 @@ def build(pt1, pt2, finishing):
     
 if __name__ == "__main__":
     
-    onemesh = build([ 0, 0, 0], [ 9, 6, 6], 32)
+    onemesh = build(1, 2, 3 , 32)
     #onemesh = buildsquare([ 0, 0, 0], [ 6, 6, 0], 64)
     meshes = [mesh.Mesh(onemesh)]
     meshrender( meshes, 0)
