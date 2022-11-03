@@ -1,7 +1,10 @@
 # meshes
 
-Easy mesh builder, expanding it in my spare times
+basic cuboid and stl shape generator.
 
-  R0.01 - Cylinder: Pipe + Circular shapes done
-  
-//TODO: sphere mesh (with two circulars and playing with width), maybe import CAD solids and mesh them.
+run main.py for generation.
+input are dimensions of the volumes seperated by spaces, 
+cuboid - l b h,
+cylinder - r h,
+
+the dimensions are in mm.
